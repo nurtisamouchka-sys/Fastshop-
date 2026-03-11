@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FAST ⚡ SHOP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030508; 
+            --card: #0d1117;
+            --accent: #3d79ff;
+            --bolt-blue: #00d2ff;
+            --sber-green: #21a038;
+            --gold-main: linear-gradient(180deg, #fff9d6 0%, #ffcc00 45%, #ff9900 50%, #8a6d00 100%);
+            --border-neon: linear-gradient(135deg, #ffffff 0%, #3d79ff 50%, #ffffff 100%);
+            --hit-grad: linear-gradient(90deg, #000000, #3d79ff, #000000);
+            --dust-blue: rgba(61, 121, 255, 0.6);   
+            --dust-white: rgba(255, 255, 255, 0.5); 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background: var(--bg); 
+            color: #fff; 
+            padding-bottom: 100px; 
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ФОН И ПЫЛЬ */
+        .bg-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -4;
+            background: radial-gradient(circle at 50% 10%, #1a253c 0%, transparent 70%);
+        }
+
+        .dust-container { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+        .dust-blue { position: absolute; inset: -100px; z-index: -2; opacity: 0.8; background-image: radial-gradient(var(--dust-blue) 0.8px, transparent 0.8px), radial-gradient(var(--dust-blue) 0.8px, transparent 0.8px); background-size: 40px 40px, 50px 50px; animation: drift-blue 30s linear infinite; }
+        .dust-white { position: absolute; inset: -100px; z-index: -1; opacity: 0.6; background-image: radial-gradient(var(--dust-white) 1.2px, transparent 1.2px), radial-gradient(var(--dust-white) 1px, transparent 1px); background-size: 70px 70px, 90px 90px; animation: drift-white 18s linear infinite alternate; }
+        
+        @keyframes drift-blue { from { transform: translateY(0); } to { transform: translateY(-100px); } }
+        @keyframes drift-white { from { transform: translate(0, 0); } to { transform: translate(40px, 60px); } }
+
+        .tech-font { font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; }
+
+        header { width: 90%; max-width: 400px; margin: 15px auto; padding: 15px; text-align: center; background: rgba(13, 17, 23, 0.9); border-radius: 20px; border: 1px solid rgba(61, 121, 255, 0.15); position: relative; z-index: 10; }
+        .container { max-width: 480px; margin: 0 auto; padding: 5px 15px; position: relative; z-index: 5; }
+
+        .title-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; font-style: italic; font-weight: 900; font-size: 1.8rem; }
+        .lightning { width: 22px; height: 32px; background: var(--bolt-blue); clip-path: polygon(100% 0, 20% 50%, 60% 50%, 0 100%, 80% 50%, 40% 50%); animation: pulse-lightning 1.2s infinite alternate ease-in-out; filter: drop-shadow(0 0 1.5px var(--bolt-blue)); }
+        @keyframes pulse-lightning { 0% { transform: scale(1); filter: drop-shadow(0 0 1.5px var(--bolt-blue)); } 100% { transform: scale(1.05); filter: drop-shadow(0 0 3px var(--bolt-blue)); } }
+
+        /* ID КАРТОЧКА */
+        .id-card { background: var(--card); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(61, 121, 255, 0.1); text-align: center; }
+        .id-input-container { position: relative; width: 100%; height: 55px; background: #000; border-radius: 12px; border: 1px solid #1f2937; overflow: hidden; }
+        #real-id-input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; z-index: 2; border:none; outline:none; }
+        #visual-id-display { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 700; pointer-events: none; }
+        .id-white { color: #ffffff; } .id-blue { color: var(--accent); }
+
+        /* СЕТКА ТОВАРОВ */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { background: var(--card); border-radius: 24px; padding: 20px 10px; text-align: center; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.03); cursor: pointer; display: flex; flex-direction: column; align-items: center; min-height: 220px; }
+        
+        .gold-area { height: 60px; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 8px; width: 100%; }
+        .ingot { width: 44px; height: 20px; background: var(--gold-main); border-radius: 4px; position: absolute; box-shadow: 0 3px 8px rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; left: 50%; transform: translateX(-50%); overflow: hidden; }
+        .ingot::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); animation: ultra-shine 4s infinite; }
+        @keyframes ultra-shine { 0% { transform: translateX(-180%) skewX(-30deg); } 40% { transform: translateX(180%) skewX(-30deg); } 100% { transform: translateX(180%) skewX(-30deg); } }
+        .ingot::after { content: "G"; font-size: 10px; font-weight: 950; color: rgba(0,0,0,0.5); position: relative; z-index: 2; }
+
+        .hit-badge { position: absolute; top: 11px; right: -28px; background: var(--hit-grad); background-size: 200% auto; color: #fff; padding: 4px 30px; font-size: 0.5rem; font-weight: 900; transform: rotate(45deg); z-index: 5; animation: shine-hit 3s linear infinite; }
+        @keyframes shine-hit { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
+        .amt { font-size: 1.3rem; font-weight: 900; margin-bottom: 4px; }
+        .sale-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 8px; min-height: 18px; }
+        .sale-tag { background: var(--sber-green); color: #fff; font-size: 0.6rem; font-weight: 900; padding: 1.5px 5px; border-radius: 5px; }
+        .old-price { font-size: 0.7rem; text-decoration: line-through; opacity: 0.3; }
+        
+        .btn { background: var(--accent); color: #fff; padding: 11px; border-radius: 11px; width: 100%; border: none; font-weight: 800; cursor: pointer; font-size: 0.9rem; transition: 0.1s; box-shadow: 0 4px 10px rgba(61, 121, 255, 0.2); }
+        .btn:active { transform: scale(0.97); }
+
+        /* ПОДДЕРЖКА (БЕЗ ЗАГОЛОВКА) */
+        .chat-container { background: var(--card); border-radius: 20px; height: 500px; display: flex; flex-direction: column; border: 1px solid rgba(61, 121, 255, 0.1); overflow: hidden; margin-top: 20px; }
+        .chat-header { background: rgba(61, 121, 255, 0.05); padding: 12px; font-size: 0.75rem; font-weight: 900; text-align: center; color: #fff; letter-spacing: 1px; border-bottom: 1px solid rgba(61, 121, 255, 0.1); text-transform: uppercase; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+        .msg { padding: 12px 16px; border-radius: 18px; font-size: 0.82rem; max-width: 85%; line-height: 1.5; position: relative; }
+        .msg.bot { background: #1a1f26; align-self: flex-start; border-bottom-left-radius: 4px; color: #e0e0e0; border: 1px solid rgba(255,255,255,0.05); }
+        .msg.user { background: var(--accent); align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 600; }
+        
+        .typing { font-size: 0.75rem; opacity: 0.5; margin-left: 5px; display: none; color: var(--bolt-blue); }
+        @keyframes blink { 0% { opacity: .2; } 20% { opacity: 1; } 100% { opacity: .2; } }
+        .typing span { animation: blink 1.4s infinite; }
+        .typing span:nth-child(2) { animation-delay: .2s; }
+        .typing span:nth-child(3) { animation-delay: .4s; }
+
+        .chat-options-area { background: #000; border-top: 1px solid rgba(255,255,255,0.05); padding: 15px; display: grid; gap: 8px; }
+        .option-btn { background: #0d1117; border: 1px solid #1f2937; border-radius: 10px; padding: 11px; color: #fff; font-size: 0.78rem; text-align: left; cursor: pointer; font-weight: 600; transition: 0.1s; }
+        .option-btn:active { background: #1a1f26; transform: scale(0.98); }
+
+        /* ОКНО ОПЛАТЫ (ФИКС КРИВИЗНЫ) */
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 15px; }
+        .modal { background: var(--border-neon); background-size: 200% auto; border-radius: 25px; padding: 2.5px; width: 100%; max-width: 330px; animation: shine-border 4s linear infinite; }
+        @keyframes shine-border { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+        .modal-content { background: #0d111b; border-radius: 23px; padding: 20px; text-align: center; }
+        
+        .pay-box { background: rgba(0,0,0,0.5); padding: 15px; border-radius: 20px; margin: 10px 0; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        .bank-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(33, 160, 56, 0.1); color: #4cd964; padding: 6px 14px; border-radius: 100px; font-size: 0.6rem; font-weight: 900; text-transform: uppercase; border: 1px solid rgba(33, 160, 56, 0.2); margin-bottom: 8px; }
+        .sber-logo { width: 14px; height: 14px; background: #21a038; border-radius: 50%; position: relative; display: flex; align-items: center; justify-content: center; }
+        .sber-logo::after { content: '✓'; color: #fff; font-size: 9px; font-weight: 950; }
+        
+        .phone-num { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 4px; }
+        .recipient-name { font-size: 0.7rem; color: #fff; opacity: 0.9; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+
+        /* НАВИГАЦИЯ */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 75px; background: rgba(13, 17, 23, 0.95); border-top: 1px solid rgba(61, 121, 255, 0.15); display: flex; justify-content: space-around; align-items: center; z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: rgba(255, 255, 255, 0.2); font-size: 0.6rem; font-weight: 800; cursor: pointer; transition: 0.2s; text-transform: uppercase; }
+        .nav-item.active { color: var(--bolt-blue); filter: drop-shadow(0 0 1px var(--bolt-blue)); }
+        .nav-icon-svg { width: 22px; height: 22px; fill: currentColor; }
+
+        .page-section { display: none; }
+        .page-section.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="bg-overlay"></div>
+
+<div class="dust-container">
+    <div class="dust-blue"></div>
+    <div class="dust-white"></div>
+</div>
+
+<header>
+    <div class="title-wrap tech-font">FAST <div class="lightning"></div> SHOP</div>
+</header>
+
+<div id="page-shop" class="page-section active">
+    <div class="container">
+        <div class="id-card">
+            <p style="font-size: 0.65rem; color: var(--accent); font-weight: 900; margin-bottom: 8px; letter-spacing: 1px;">ВАШ ID</p>
+            <div class="id-input-container">
+                <input type="number" id="real-id-input" oninput="if(this.value.length > 10) this.value = this.value.slice(0, 10); updateIDDisplay()">
+                <div id="visual-id-display" class="id-white tech-font"><span style="color:rgba(255,255,255,0.15)">Введите ID</span></div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card" onclick="openConfirm(100, 49)">
+                <div class="gold-area"><div class="ingot"></div></div>
+                <div class="amt">100 G</div>
+                <div class="sale-row"></div>
+                <button class="btn">49 ₽</button>
+            </div>
+            
+            <div class="card" onclick="openConfirm(500, 174)">
+                <div class="hit-badge">ХИТ</div>
+                <div class="gold-area">
+                    <div class="ingot" style="transform:translate(calc(-50% - 7px),7px)"></div>
+                    <div class="ingot" style="transform:translate(calc(-50% + 7px),-7px)"></div>
+                </div>
+                <div class="amt">500 G</div>
+                <div class="sale-row">
+                    <div class="old-price">249 ₽</div>
+                    <div class="sale-tag">-30%</div>
+                </div>
+                <div style="font-size:0.55rem; color:var(--bolt-blue); font-weight:800; margin-bottom:8px;">ДОСТУПНО 1 РАЗ</div>
+                <button class="btn">КУПИТЬ 174 ₽</button>
+            </div>
+
+            <div class="card" onclick="openConfirm(1000, 499)">
+                <div class="gold-area">
+                    <div class="ingot" style="transform:translate(-50%,7px); z-index:2;"></div>
+                    <div class="ingot" style="transform:translate(calc(-50% - 13px),-4px); z-index:1;"></div>
+                    <div class="ingot" style="transform:translate(calc(-50% + 13px),-4px); z-index:1;"></div>
+                </div>
+                <div class="amt">1000 G</div>
+                <div class="sale-row"></div>
+                <button class="btn">499 ₽</button>
+            </div>
+            
+            <div class="card" onclick="openConfirm(3000, 1899)">
+                <div class="gold-area">
+                    <div class="ingot" style="transform:translate(calc(-50% - 13px),13px)"></div>
+                    <div class="ingot" style="transform:translate(calc(-50% + 13px),13px)"></div>
+                    <div class="ingot" style="transform:translate(-50%,-5px)"></div>
+                </div>
+                <div class="amt">3000 G</div>
+                <div class="sale-row"></div>
+                <button class="btn">1899 ₽</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: rgba(255, 255, 255, 0.02); border-radius: 24px; border: 1px solid rgba(61, 121, 255, 0.2);">
+            <h3 style="font-size: 0.9rem; color: #fff; margin-bottom: 15px; text-align: left; letter-spacing: 1px; text-transform: uppercase;" class="tech-font">Важная информация</h3>
+            <div style="display: grid; gap: 14px;">
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: var(--accent); font-weight: 900; font-size: 0.8rem;">1.</span>
+                    <p style="font-size: 0.75rem; opacity: 0.8; line-height: 1.4;"><b style="color: #fff;">Идентификация:</b> Система работает по указанному вами ID. Пожалуйста, внимательно проверяйте данные перед оплатой.</p>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: var(--accent); font-weight: 900; font-size: 0.8rem;">2.</span>
+                    <p style="font-size: 0.75rem; opacity: 0.8; line-height: 1.4;"><b style="color: #fff;">Зачисление:</b> Голда поступает в течение <b style="color:var(--bolt-blue)">5 секунд</b>. Максимальный срок — <b style="color:var(--bolt-blue)">5 минут</b>.</p>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: var(--accent); font-weight: 900; font-size: 0.8rem;">3.</span>
+                    <p style="font-size: 0.75rem; opacity: 0.8; line-height: 1.4;"><b style="color: #fff;">Безопасность:</b> Мы не запрашиваем пароли. Для пополнения требуется исключительно ваш цифровой ID.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="page-support" class="page-section">
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">Fast shop / ИИ поддержка</div>
+            <div class="chat-messages" id="chat-box">
+                <div class="msg bot">Здравствуйте! Я интеллектуальный помощник FAST SHOP. Моя задача — мгновенно разобраться в вашей проблеме. С чем именно возникли трудности?</div>
+            </div>
+            <div id="typing-indicator" class="typing" style="margin: 0 0 10px 15px;">Печатает<span>.</span><span>.</span><span>.</span></div>
+            <div class="chat-options-area">
+                <button class="option-btn" onclick="selectReason('Я оплатил заказ, но голда не поступила в течение 5 минут')">1. Задержка зачисления (оплата прошла)</button>
+                <button class="option-btn" onclick="selectReason('Я допустил ошибку при вводе игрового ID в окне оплаты')">2. Ошибка в ID при транзакции</button>
+                <button class="option-btn" onclick="selectReason('Банковская система отклоняет платеж или выдает ошибку')">3. Не удается совершить оплату</button>
+                <button class="option-btn" onclick="selectReason('Я нашел баг или неточность в работе вашего интерфейса')">4. Сообщить о техническом баге</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" id="pay-modal">
+    <div class="modal"><div class="modal-content">
+        <h2 id="pay-amt-title" style="font-size:2.5rem; font-weight:950; margin-bottom:15px;"></h2>
+        <div class="pay-box" onclick="copyNum()">
+            <div class="bank-badge">
+                <div class="sber-logo"></div>
+                ПЕРЕВОД ПАО «СБЕРБАНК»
+            </div>
+            <p class="phone-num tech-font">+7 905 507-50-57</p>
+            <p class="recipient-name">ПОЛУЧАТЕЛЬ: УМАР Я.</p>
+            <p style="font-size:0.6rem; color:var(--accent); font-weight:700;">[НАЖМИТЕ ДЛЯ КОПИРОВАНИЯ]</p>
+        </div>
+        <div style="margin: 15px 0;">
+            <p style="font-size:0.8rem; opacity:0.6;">Зачисление <span id="pay-gold-amt" style="color:var(--bolt-blue); font-weight:800;"></span> на ID:</p>
+            <p id="final-id-display" class="tech-font" style="font-size:1.6rem; font-weight:900; margin-bottom: 20px;"></p> </div>
+        
+        <button class="btn" style="padding:15px; font-size:1.1rem; margin-top: -15px;" onclick="alert('Ваша заявка зарегистрирована в системе. После проверки платежа голда поступит на указанный ID.')">Я ОПЛАТИЛ</button>
+        
+        <div class="back-link" onclick="closeModals()">← Вернуться назад</div>
+    </div></div>
+</div>
+
+<div class="overlay" id="confirm-modal">
+    <div class="modal"><div class="modal-content">
+        <p style="opacity:0.6; font-size:0.8rem; margin-bottom:8px;">Проверьте корректность ID</p>
+        <div id="confirm-id-val" class="tech-font" style="font-size:1.9rem; font-weight:700; margin-bottom:15px;"></div>
+        <button class="btn" style="padding:15px; font-size:1.1rem;" onclick="goToPayment()">Подтвердить</button>
+        <div class="back-link" onclick="closeModals()">Изменить данные</div>
+    </div></div>
+</div>
+
+<nav class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('page-shop', this)">
+        <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        <span>Магазин</span>
+    </div>
+    <div class="nav-item" onclick="switchTab('page-support', this)">
+        <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M21 12.22C21 13.27 20.15 14.12 19.1 14.12H17.2V11.22H19.1V12.22ZM6.8 14.12H4.9C3.85 14.12 3 13.27 3 12.22V11.22C3 10.17 3.85 9.32 4.9 9.32H6.8V14.12ZM12 2C6.48 2 2 6.48 2 12V17C2 18.66 3.34 20 5 20H8V12H5V11.22C5 7.35 8.13 4.22 12 4.22C15.87 4.22 19 7.35 19 11.22V12H16V20H19C20.66 20 22 18.66 22 17V12C22 6.48 17.52 2 12 2z"/></svg>
+        <span>Помощь</span>
+    </div>
+</nav>
+
+<script>
+    let cPrice, cGold, cID;
+
+    // ОБЩАЯ ЛОГИКА
+    function switchTab(tabId, el) {
+        document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        el.classList.add('active');
+    }
+
+    function updateIDDisplay() {
+        const val = document.getElementById('real-id-input').value;
+        const display = document.getElementById('visual-id-display');
+        if(!val) { display.innerHTML = '<span style="color:rgba(255,255,255,0.15)">Введите ID</span>'; return; }
+        display.innerHTML = `<span class="id-white">${val.substring(0, 4)}</span><span class="id-blue">${val.substring(4)}</span>`;
+    }
+
+    // ЛОГИКА ИИ-ЧАТА
+    function selectReason(reason) {
+        const box = document.getElementById('chat-box');
+        const indicator = document.getElementById('typing-indicator');
+        
+        indicator.style.display = 'none';
+
+        const uMsg = document.createElement('div');
+        uMsg.className = 'msg user';
+        uMsg.innerText = reason;
+        box.appendChild(uMsg);
+        box.scrollTop = box.scrollHeight;
+
+        const btns = document.querySelectorAll('.option-btn');
+        btns.forEach(b => b.disabled = true);
+
+        indicator.style.display = 'block';
+        box.scrollTop = box.scrollHeight;
+
+        setTimeout(() => {
+            indicator.style.display = 'none';
+            const bMsg = document.createElement('div');
+            bMsg.className = 'msg bot';
+            let ans = "";
+            if(reason.includes('Задержка')) ans = "Я проверил текущий реестр транзакций. Ваше обращение зафиксировано. В редких случаях из-за нагрузки на шлюзы СБП зачисление может занять до 10 минут. Пожалуйста, не закрывайте страницу и сохраняйте скриншот чека из банка для ручной верификации, если время ожидания превысит регламент.";
+            else if(reason.includes('ошибку')) ans = "Мы зафиксировали запрос на корректировку ID. Ожидайте проверки статуса транзакции нашим специалистом.";
+            else if(reason.includes('Банковская')) ans = "При возникновении ошибок банка рекомендуем проверить баланс и лимиты. Повторите попытку через 10 минут.";
+            else ans = "Информация о баге передана в IT-отдел. Благодарим за содействие.";
+            bMsg.innerText = ans;
+            box.appendChild(bMsg);
+            box.scrollTop = box.scrollHeight;
+            btns.forEach(b => b.disabled = false);
+        }, 2000);
+    }
+
+    // ЛОГИКА ОПЛАТЫ
+    function openConfirm(gold, price) {
+        cID = document.getElementById('real-id-input').value;
+        if(cID.length < 6) { alert("Введите ID"); return; }
+        cPrice = price; cGold = gold;
+        document.getElementById('confirm-id-val').innerText = cID;
+        document.getElementById('confirm-modal').style.display = 'flex';
+    }
+
+    function goToPayment() {
+        document.getElementById('confirm-modal').style.display = 'none';
+        document.getElementById('pay-amt-title').innerText = cPrice + " ₽";
+        document.getElementById('pay-gold-amt').innerText = cGold + " G";
+        document.getElementById('final-id-display').innerText = cID;
+        document.getElementById('pay-modal').style.display = 'flex';
+    }
+
+    function closeModals() {
+        document.getElementById('confirm-modal').style.display = 'none';
+        document.getElementById('pay-modal').style.display = 'none';
+    }
+
+    function copyNum() {
+        const num = "+79055075057";
+        navigator.clipboard.writeText(num).then(() => {
+            alert("Номер Сбербанка +7 (905) 507-50-57 скопирован в буфер обмена. Получатель: УМАР Я.");
+        });
+    }
+</script>
+</body>
+</html>
