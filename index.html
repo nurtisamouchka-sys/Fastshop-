@@ -30,7 +30,6 @@
             min-height: 100vh;
         }
 
-        /* ФОН И ПЫЛЬ */
         .bg-overlay {
             position: fixed;
             inset: 0;
@@ -54,14 +53,12 @@
         .lightning { width: 22px; height: 32px; background: var(--bolt-blue); clip-path: polygon(100% 0, 20% 50%, 60% 50%, 0 100%, 80% 50%, 40% 50%); animation: pulse-lightning 1.2s infinite alternate ease-in-out; filter: drop-shadow(0 0 1.5px var(--bolt-blue)); }
         @keyframes pulse-lightning { 0% { transform: scale(1); filter: drop-shadow(0 0 1.5px var(--bolt-blue)); } 100% { transform: scale(1.05); filter: drop-shadow(0 0 3px var(--bolt-blue)); } }
 
-        /* ID КАРТОЧКА */
         .id-card { background: var(--card); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(61, 121, 255, 0.1); text-align: center; }
         .id-input-container { position: relative; width: 100%; height: 55px; background: #000; border-radius: 12px; border: 1px solid #1f2937; overflow: hidden; }
         #real-id-input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; z-index: 2; border:none; outline:none; }
         #visual-id-display { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 700; pointer-events: none; }
         .id-white { color: #ffffff; } .id-blue { color: var(--accent); }
 
-        /* СЕТКА ТОВАРОВ */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: var(--card); border-radius: 24px; padding: 20px 10px; text-align: center; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.03); cursor: pointer; display: flex; flex-direction: column; align-items: center; min-height: 220px; }
         
@@ -71,23 +68,7 @@
         @keyframes ultra-shine { 0% { transform: translateX(-180%) skewX(-30deg); } 40% { transform: translateX(180%) skewX(-30deg); } 100% { transform: translateX(180%) skewX(-30deg); } }
         .ingot::after { content: "G"; font-size: 10px; font-weight: 950; color: rgba(0,0,0,0.5); position: relative; z-index: 2; }
 
-        .hit-badge { 
-            position: absolute; 
-            top: 15px; 
-            right: -35px; 
-            background: var(--hit-grad); 
-            background-size: 200% auto; 
-            color: #fff; 
-            padding: 5px 45px; 
-            font-size: 0.65rem; 
-            font-weight: 950; 
-            transform: rotate(45deg); 
-            z-index: 5; 
-            animation: shine-hit 3s linear infinite; 
-            box-shadow: 0 2px 6px rgba(0,0,0,0.4); 
-            letter-spacing: 1px;
-        }
-        @keyframes shine-hit { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+        .hit-badge { position: absolute; top: 15px; right: -35px; background: var(--hit-grad); background-size: 200% auto; color: #fff; padding: 5px 45px; font-size: 0.65rem; font-weight: 950; transform: rotate(45deg); z-index: 5; animation: shine-hit 3s linear infinite; box-shadow: 0 2px 6px rgba(0,0,0,0.4); letter-spacing: 1px; }
 
         .amt { font-size: 1.3rem; font-weight: 900; margin-bottom: 4px; }
         .sale-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 8px; min-height: 18px; }
@@ -115,7 +96,6 @@
         .option-btn { background: #0d1117; border: 1px solid #1f2937; border-radius: 10px; padding: 11px; color: #fff; font-size: 0.78rem; text-align: left; cursor: pointer; font-weight: 600; transition: 0.1s; }
         .option-btn:active { background: #1a1f26; transform: scale(0.98); }
 
-        /* ОКНО ОПЛАТЫ */
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 15px; }
         .modal { background: var(--border-neon); background-size: 200% auto; border-radius: 25px; padding: 2.5px; width: 100%; max-width: 330px; animation: shine-border 4s linear infinite; }
         @keyframes shine-border { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
@@ -129,7 +109,6 @@
         .phone-num { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 4px; }
         .recipient-name { font-size: 0.7rem; color: #fff; opacity: 0.9; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
 
-        /* КАСТОМНОЕ УВЕДОМЛЕНИЕ (TOAST) */
         .toast {
             position: fixed;
             top: -100px;
@@ -149,7 +128,14 @@
         .toast.show { top: 30px; }
         .toast-msg { font-size: 0.85rem; font-weight: 600; line-height: 1.4; color: #fff; }
 
-        /* НАВИГАЦИЯ */
+        /* ЗОЛОТОЙ ТЕКСТ */
+        .gold-glow {
+            background: var(--gold-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 950;
+        }
+
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 75px; background: rgba(13, 17, 23, 0.95); border-top: 1px solid rgba(61, 121, 255, 0.15); display: flex; justify-content: space-around; align-items: center; z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: rgba(255, 255, 255, 0.2); font-size: 0.6rem; font-weight: 800; cursor: pointer; transition: 0.2s; text-transform: uppercase; }
         .nav-item.active { color: var(--bolt-blue); filter: drop-shadow(0 0 1px var(--bolt-blue)); }
@@ -193,7 +179,6 @@
             <div class="card" onclick="openConfirm(100, 49)">
                 <div class="gold-area"><div class="ingot"></div></div>
                 <div class="amt">100 G</div>
-                <div class="sale-row"></div>
                 <button class="btn">49 ₽</button>
             </div>
             
@@ -208,8 +193,7 @@
                     <div class="old-price">249 ₽</div>
                     <div class="sale-tag">-30%</div>
                 </div>
-                <div style="font-size:0.55rem; color:var(--bolt-blue); font-weight:800; margin-bottom:8px;">ДОСТУПНО 1 РАЗ</div>
-                <button class="btn">КУПИТЬ 174 ₽</button>
+                <button class="btn">174 ₽</button>
             </div>
 
             <div class="card" onclick="openConfirm(1000, 499)">
@@ -219,7 +203,6 @@
                     <div class="ingot" style="transform:translate(calc(-50% + 13px),-4px); z-index:1;"></div>
                 </div>
                 <div class="amt">1000 G</div>
-                <div class="sale-row"></div>
                 <button class="btn">499 ₽</button>
             </div>
             
@@ -230,7 +213,6 @@
                     <div class="ingot" style="transform:translate(-50%,-5px)"></div>
                 </div>
                 <div class="amt">3000 G</div>
-                <div class="sale-row"></div>
                 <button class="btn">1899 ₽</button>
             </div>
         </div>
@@ -268,11 +250,11 @@
             <p style="font-size:0.6rem; color:var(--accent); font-weight:700;">[НАЖМИТЕ ДЛЯ КОПИРОВАНИЯ]</p>
         </div>
         <div style="margin: 15px 0;">
-            <p style="font-size:0.8rem; opacity:0.6;">Зачисление <span id="pay-gold-amt" style="color:var(--bolt-blue); font-weight:800;"></span> на ID:</p>
+            <p style="font-size:0.8rem; opacity:0.6;">Зачисление <span id="pay-gold-amt"></span> на ID:</p>
             <p id="final-id-display" class="tech-font" style="font-size:1.6rem; font-weight:900; margin-bottom: 10px;"></p> 
         </div>
         
-        <button class="btn modal-btn" onclick="showToast('Ваша заявка зарегистрирована в системе. После проверки платежа голда поступит на указанный ID.')">Я ОПЛАТИЛ</button>
+        <button class="btn modal-btn" onclick="showFinalToast()">Я ОПЛАТИЛ</button>
         
         <div class="back-link" onclick="closeModals()">← Вернуться назад</div>
     </div></div>
@@ -301,7 +283,6 @@
                 <button class="option-btn" onclick="selectReason('Я оплатил заказ, но голда не поступила в течение 5 минут')">1. Задержка зачисления (оплата прошла)</button>
                 <button class="option-btn" onclick="selectReason('Я допустил ошибку при вводе игрового ID в окне оплаты')">2. Ошибка в ID при транзакции</button>
                 <button class="option-btn" onclick="selectReason('Банковская система отклоняет платеж или выдает ошибку')">3. Не удается совершить оплату</button>
-                <button class="option-btn" onclick="selectReason('Я нашел баг или неточность в работе вашего интерфейса')">4. Сообщить о техническом баге</button>
             </div>
         </div>
     </div>
@@ -321,14 +302,13 @@
 <script>
     let cPrice, cGold, cID;
 
-    // ФУНКЦИЯ ДЛЯ ПОКАЗА КРАСИВОГО УВЕДОМЛЕНИЯ
-    function showToast(text) {
+    function showFinalToast() {
         const toast = document.getElementById('toast-notify');
-        document.getElementById('toast-text').innerText = text;
+        const toastText = document.getElementById('toast-text');
+        toastText.innerHTML = `Ваша транзакция с вашим ID ${cID} на проверке, проверяем поступление денег после чего зачислим <span class="gold-glow">${cGold} G</span>`;
         toast.classList.add('show');
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3500);
+        closeModals();
+        setTimeout(() => toast.classList.remove('show'), 6000);
     }
 
     function switchTab(tabId, el) {
@@ -345,34 +325,9 @@
         display.innerHTML = `<span class="id-white">${val.substring(0, 4)}</span><span class="id-blue">${val.substring(4)}</span>`;
     }
 
-    function selectReason(reason) {
-        const box = document.getElementById('chat-box');
-        const indicator = document.getElementById('typing-indicator');
-        indicator.style.display = 'none';
-        const uMsg = document.createElement('div');
-        uMsg.className = 'msg user';
-        uMsg.innerText = reason;
-        box.appendChild(uMsg);
-        box.scrollTop = box.scrollHeight;
-        const btns = document.querySelectorAll('.option-btn');
-        btns.forEach(b => b.disabled = true);
-        indicator.style.display = 'block';
-        box.scrollTop = box.scrollHeight;
-        setTimeout(() => {
-            indicator.style.display = 'none';
-            const bMsg = document.createElement('div');
-            bMsg.className = 'msg bot';
-            let ans = reason.includes('Задержка') ? "Я проверил текущий реестр транзакций. Ваше обращение зафиксировано. В редких случаях зачисление может занять до 10 минут." : "Ваше обращение передано специалистам для верификации.";
-            bMsg.innerText = ans;
-            box.appendChild(bMsg);
-            box.scrollTop = box.scrollHeight;
-            btns.forEach(b => b.disabled = false);
-        }, 2000);
-    }
-
     function openConfirm(gold, price) {
         cID = document.getElementById('real-id-input').value;
-        if(cID.length < 6) { showToast("Введите корректный ID"); return; }
+        if(cID.length < 6) { return; }
         cPrice = price; cGold = gold;
         document.getElementById('confirm-id-val').innerText = cID;
         document.getElementById('confirm-modal').style.display = 'flex';
@@ -381,7 +336,7 @@
     function goToPayment() {
         document.getElementById('confirm-modal').style.display = 'none';
         document.getElementById('pay-amt-title').innerText = cPrice + " ₽";
-        document.getElementById('pay-gold-amt').innerText = cGold + " G";
+        document.getElementById('pay-gold-amt').innerHTML = `<span class="gold-glow">${cGold} G</span>`;
         document.getElementById('final-id-display').innerText = cID;
         document.getElementById('pay-modal').style.display = 'flex';
     }
@@ -393,10 +348,31 @@
 
     function copyNum() {
         const num = "+79055075057";
-        navigator.clipboard.writeText(num).then(() => {
-            showToast("Номер +7 (905) 507-50-57 скопирован. Получатель: УМАР Я.");
-        });
+        navigator.clipboard.writeText(num);
+        const toast = document.getElementById('toast-notify');
+        document.getElementById('toast-text').innerText = "Номер скопирован";
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function selectReason(reason) {
+        const box = document.getElementById('chat-box');
+        const indicator = document.getElementById('typing-indicator');
+        const uMsg = document.createElement('div');
+        uMsg.className = 'msg user';
+        uMsg.innerText = reason;
+        box.appendChild(uMsg);
+        box.scrollTop = box.scrollHeight;
+        indicator.style.display = 'block';
+        setTimeout(() => {
+            indicator.style.display = 'none';
+            const bMsg = document.createElement('div');
+            bMsg.className = 'msg bot';
+            bMsg.innerText = "Ваше обращение передано специалистам. Ожидайте ответа в течение 10-15 минут.";
+            box.appendChild(bMsg);
+            box.scrollTop = box.scrollHeight;
+        }, 2000);
     }
 </script>
 </body>
-</html>
+                    </html>
